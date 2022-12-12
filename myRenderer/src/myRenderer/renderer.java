@@ -1,8 +1,7 @@
-//3D Renderer
-//Brandon Jameson
-//A simple software-based 3D rendering solution based of Rasterization, includes a zBuffer
-//Working on a UI to swap shapes rendered on the fly based off selection.
-//Planning on translation, scaling and roll control.
+//name: 3D Renderer
+//a software based renderer capable of displaying a 3D shape
+//Author: Brandon Jameson
+//Github: https://github.com/JamesonGG/3D-Renderer
 
 package myRenderer;
 
@@ -24,31 +23,36 @@ import javax.swing.SwingConstants;
 public class renderer {
 	static JComboBox<String> shapes;
 	static JPanel renderPanel;
+	public static JFrame frame;
+	public static Container pane;
+	
+	public static JSlider headingSlider;
+	public static JSlider pitchSlider;
+	
+	public static String[] shapeList;
 	
 	@SuppressWarnings("serial")
 	public static void main (String[] args) {
-		
-		JFrame frame = new JFrame();
-		Container pane = frame.getContentPane();
+		//This is just some setup for the program to work. Realistically,
+		//This should really be in it's own function, like Init().
+		frame = new JFrame();
+		pane = frame.getContentPane();
 		pane.setLayout(new BorderLayout());
 		
 		//note for me: This creates a horizontal slider.
-		JSlider headingSlider = new JSlider(-180, 180, 0);
+		headingSlider = new JSlider(-180, 180, 0);
 		pane.add(headingSlider, BorderLayout.SOUTH);
 		
 		//same as above, but a vertical slider.
-		JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
+		pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
 		pane.add(pitchSlider, BorderLayout.EAST);
 		
-		String[] shapeList = {"Cube", "Diamond", "Sphere", "Tetrahderon"};
+		shapeList = new String[]{"Cube", "Diamond", "Sphere", "Tetrahderon", "Pyramid"};
 		
 		shapes = new JComboBox<String>(shapeList);
-        
-        shapes.addActionListener(shapes);
 	    
 	    shapes.setBounds(0, 0, 200, 24);
         pane.add(shapes);
-        shapes.getItemAt(0);
 		
 		
 		renderPanel = new JPanel() {
@@ -61,9 +65,9 @@ public class renderer {
 				ArrayList<Triangle> triangles = new ArrayList<>();
 				
 				//Uncomment this for a cube
-				/*
+				
 				//X+
-	            triangles.add(new Triangle(new Vertex(100, -100, 100),
+				triangles.add(new Triangle(new Vertex(100, -100, 100),
 	                                  new Vertex(100, 100, -100),
 	                                  new Vertex(100, 100, 100),
 	                                  Color.RED));
@@ -93,11 +97,11 @@ public class renderer {
 	            triangles.add(new Triangle(new Vertex(-100, 100, 100),
 	                                  new Vertex(100, 100, 100),
 	                                  new Vertex(-100, 100, -100),
-	                                  Color.ORANGE));
+	                                  Color.GREEN));
 	            triangles.add(new Triangle(new Vertex(100, 100, 100),
 	                                  new Vertex(100, 100, -100),
 	                                  new Vertex(-100, 100, -100),
-	                                  Color.ORANGE));
+	                                  Color.GREEN));
 	            //Z+
 	            triangles.add(new Triangle(new Vertex(-100, -100, 100),
 	                                  new Vertex(100, -100, 100),
@@ -116,10 +120,10 @@ public class renderer {
 	                                  new Vertex(100, 100, -100),
 	                                  new Vertex(100, -100, -100),
 	                                  Color.BLUE));
-	            */
+	            
 				
 				//Uncomment this for a diamond
-				
+				/*
 				triangles.add(new Triangle(new Vertex(0, 50, 200),
 						   new Vertex(200, 50, 0),
 						   new Vertex(0, 250, 0),
@@ -152,10 +156,56 @@ public class renderer {
 			  			   new Vertex(0, 50, -200),
 			  			   new Vertex(-200, 50, 0),
 			  			   Color.BLUE));
+			  	*/
 				
 				//Uncomment this for a pyramid
-				//TODO
-				
+				/*
+				//X+
+				triangles.add(new Triangle(new Vertex(0, 200, 200),
+						   new Vertex(200, 200, 200),
+						   new Vertex(0, -200, 0),
+						   Color.RED));
+				triangles.add(new Triangle(new Vertex(0, 200, 200),
+						   new Vertex(-200, 200, 200),
+						   new Vertex(0, -200, 0),
+						   Color.RED));
+				//X-
+				triangles.add(new Triangle(new Vertex(0, 200, -200),
+						   new Vertex(200, 200, -200),
+						   new Vertex(0, -200, 0),
+						   Color.MAGENTA));
+				triangles.add(new Triangle(new Vertex(0, 200, -200),
+						   new Vertex(-200, 200, -200),
+						   new Vertex(0, -200, 0),
+						   Color.MAGENTA));
+				//Z+
+				triangles.add(new Triangle(new Vertex(-200, 200, 200),
+						   new Vertex(-200, 200, 0),
+						   new Vertex(0, -200, 0),
+						   Color.BLUE));
+				triangles.add(new Triangle(new Vertex(-200, 200, -200),
+						   new Vertex(-200, 200, 0),
+						   new Vertex(0, -200, 0),
+						   Color.BLUE));
+				//Z-
+				triangles.add(new Triangle(new Vertex(200, 200, 200),
+						   new Vertex(200, 200, 0),
+						   new Vertex(0, -200, 0),
+						   Color.CYAN));
+				triangles.add(new Triangle(new Vertex(200, 200, -200),
+						   new Vertex(200, 200, 0),
+						   new Vertex(0, -200, 0),
+						   Color.CYAN));
+				//base
+				triangles.add(new Triangle(new Vertex(-200, 200, 200),
+                        new Vertex(200, 200, 200),
+                        new Vertex(-200, 200, -200),
+                        Color.GREEN));
+				triangles.add(new Triangle(new Vertex(200, 200, 200),
+                        new Vertex(200, 200, -200),
+                        new Vertex(-200, 200, -200),
+                        Color.GREEN));
+                */
 				
 				//Uncomment this for a tetrahedron
                 /*
@@ -181,9 +231,13 @@ public class renderer {
                 /*
 				for (int i = 0; i < 4; i++) {
 					triangles = inflate(triangles);
-				}*/
+				}
+				*/
 				//end rendering data input.
 				
+	            
+	            //this takes headingSlider value, and converts it into a transform
+	            //to be used to rotate on the z plane
 				double heading = Math.toRadians(headingSlider.getValue());
 				Matrix3 headingTransform = new Matrix3(new double[] {
 					Math.cos(heading), 0, -Math.sin(heading),
@@ -191,6 +245,7 @@ public class renderer {
 					Math.sin(heading), 0, Math.cos(heading)
 				});
 				
+				//like above, but with the x plane.
 				double pitch = Math.toRadians(pitchSlider.getValue());
 				Matrix3 pitchTransform = new Matrix3(new double[] {
 					1, 0, 0,
@@ -203,11 +258,16 @@ public class renderer {
 				//this displays the inputed data as a projected 3d object
 				BufferedImage img = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 				
+				//zBuffer is used to control the order of drawing triangles
 				double[] zBuffer = new double[img.getWidth() * img.getHeight()];
 				
 				for (int q = 0; q < zBuffer.length; q++) {
 					zBuffer[q] = Double.NEGATIVE_INFINITY;
 				}
+				
+				//here we loop through triangle : triangles, and we quickly calculate their
+				//properties in 3d space using some geometry, like vertex positions,
+				//side lengths, normals, area, and orientation to the "camera" (V3.zero)
 				
 				for (Triangle triangle : triangles) {
 					Vertex vertex1 = transform.transform(triangle.vertex1);
@@ -234,7 +294,7 @@ public class renderer {
 					    norm.yPos /= normalLength;
 					    norm.zPos /= normalLength;
 					    
-					    double angleCos = Math.abs(norm.zPos);
+					double angleCos = Math.abs(norm.zPos);
 					
 					
 					int minX = (int) Math.max(0, Math.ceil(Math.min(vertex1.xPos, Math.min(vertex2.xPos, vertex3.xPos))));
@@ -248,6 +308,13 @@ public class renderer {
 				    double triangleArea = 	
 				    (vertex1.yPos - vertex3.yPos) * (vertex2.xPos - vertex3.xPos) + (vertex2.yPos - vertex3.yPos) * (vertex3.xPos - vertex1.xPos);
 				    
+				    //this little bit of code is just calculating the depth of each triangle
+				    //based off the x and y co-ordinates of each vertex, divided by the area.
+				    //Essentially, this is giving a float, with lower values being "further"
+				    //away from the viewport. These values are indexed to be called above
+				    //by the zBuffer, and we're also looking at the cosine of the triangle
+				    //relative to the viewport, and applying a shadow based off the formula
+				    //in the getShade function.
 				    for (int y = minY; y <= maxY; y++) {
 				    	for (int x = minX; x <= maxX; x++) {
 				    		 double b1 = 
@@ -278,16 +345,20 @@ public class renderer {
 		
 		pane.add(renderPanel, BorderLayout.CENTER);
 		
+		//Here we wait for any change to the slider value, and if there is,
+		//we repaint the renderPanel to the new calculated shape.
 		headingSlider.addChangeListener(e -> renderPanel.repaint());
 		pitchSlider.addChangeListener(e -> renderPanel.repaint());
-		
-		
 		
 		frame.setSize(800, 800);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	//this function is just creating a linear colour gradient which gradually darkens based
+	//off of some inputed double value, which is the cosine of the triangle relative
+	//to the camera. This gives the illusion of shadows appearing on the triangles
+	//as they turn away from the camera, which is also a pseudo-light source.
 	public static Color getShade(Color color, double shade) {
 		double redLinear = Math.pow(color.getRed(), 2.4) * shade;
 		double greenLinear = Math.pow(color.getGreen(), 2.4) * shade;
@@ -299,6 +370,8 @@ public class renderer {
 		return new Color(red, green, blue);
 	}
 	
+	//We're taking the average of vertex positions to get the midpoint, and simple creating
+	//new triangles using these averaged points to create curves.
 	public static ArrayList<Triangle> inflate (List<Triangle> triangles) {
 		ArrayList<Triangle> result = new ArrayList<>();
 		for (Triangle triangle : triangles) {
@@ -317,6 +390,10 @@ public class renderer {
 			result.add(new Triangle(triangle.vertex3, inflate2, inflate3, triangle.color));
 			result.add(new Triangle(inflate1, inflate2, inflate3, triangle.color));
 		}
+		//looping through the result list, we apply some simple addition and multiplication
+		//using the vertex coordinates, then divide this value by some float, higher is smoother.
+		//Then we root this value to get a length for our new edges, and divide the vertex coordinates
+		//by this length to create some very nice curvy edges.
 		for (Triangle triangle : result) {
 			for (Vertex vertex : new Vertex[] {triangle.vertex1, triangle.vertex2, triangle.vertex3}) {
 				double length = Math.sqrt(vertex.xPos * vertex.xPos + vertex.yPos * vertex.yPos + vertex.zPos * vertex.zPos) / Math.sqrt(30000);
@@ -331,7 +408,8 @@ public class renderer {
 	
 }
 
-
+//The next 2 classes are simply storing data for the Vertex and Triangle object
+//which we need to create 3d objects.
 class Vertex {
 	double xPos;
 	double yPos;
@@ -358,7 +436,13 @@ class Triangle {
 }
 
 
-//math to make object manipulation possible.
+//This is probably the part i least understand.
+//The multiply function is, I believe, creating a 3x3 matrix, and cross-multiplying
+//values in this matrix for use in our main Renderer class.
+
+//the transform function is taking in a Vertex, and is applying the values
+//from the multiplied matrix in order to manipulate the Vertex in
+//order to transform/rotate the Vertex.
 class Matrix3 {
 	double[] values;
 	
@@ -386,3 +470,21 @@ class Matrix3 {
         );
 	}
 }
+
+/*Closing Thoughts:
+	This program *REALLY* struggles at large resolutions (4k and beyond).
+	This is due to the fact it is entirely CPU bound, and does not take advantage of multi-threading.
+	This probably wouldnt really even help that much and realistically, this kind of thing is written as a shader
+	or by OpenGL for a reason. OpenGL alone has a ton of optimizations this can't ever do, 
+	There really wasn't any reason to write this on the CPU other than why not? ¯\_(ツ)_/¯
+	
+	I imagine another big performance hog would be high-vertice shapes, like 10k+ triangle shapes. Since this is still CPU
+	bound, calculating all of the transforms on such a shape really wouldn't be fun.
+	
+	Oh also, it's really painful to create new shapes, lots of napkin mapping and a lot of guess-work.
+	I do plan on trying to figure out how to add on a .obj parser in order to display custom 3d objects,
+	like models from Blender or 3Ds. That'd be pretty neat!
+	
+	Thanks for taking your time having a look at this, still working on it!
+		-Brandon
+*/
